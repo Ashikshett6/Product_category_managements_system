@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Category Management</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Product Category Management System</h1>
+    <p class="subtitle">Manage categories and products</p>
+  </header>
+
+  <div id="message" class="message hidden"></div>
+
+  <main class="container">
+    <section class="panel">
+      <h2>Categories</h2>
+      <form id="categoryForm" class="form">
+        <input type="hidden" id="categoryId" value="">
+        <div class="field">
+          <label for="categoryName">Category Name *</label>
+          <input type="text" id="categoryName" required placeholder="e.g. Electronics">
+        </div>
+        <div class="field">
+          <label for="categoryDescription">Description</label>
+          <textarea id="categoryDescription" rows="2" placeholder="Optional description"></textarea>
+        </div>
+        <div class="actions">
+          <button type="submit" id="categorySubmitBtn">Add Category</button>
+          <button type="button" id="categoryCancelBtn" class="btn-secondary hidden">Cancel</button>
+        </div>
+      </form>
+
+      <div id="categoryList" class="list">
+        <p class="loading">Loading categories...</p>
+      </div>
+    </section>
+
+    <section class="panel" id="productPanel">
+      <h2>Products <span id="selectedCategoryLabel"></span></h2>
+      <form id="productForm" class="form hidden">
+        <input type="hidden" id="productId" value="">
+        <input type="hidden" id="productCategoryId" value="">
+        <div class="field">
+          <label for="productName">Product Name *</label>
+          <input type="text" id="productName" required placeholder="e.g. Laptop">
+        </div>
+        <div class="field">
+          <label for="productDescription">Description</label>
+          <textarea id="productDescription" rows="2" placeholder="Optional description"></textarea>
+        </div>
+        <div class="actions">
+          <button type="submit" id="productSubmitBtn">Add Product</button>
+          <button type="button" id="productCancelBtn" class="btn-secondary hidden">Cancel</button>
+        </div>
+      </form>
+      <p id="productHint" class="hint">Select a category to manage products</p>
+      <div id="productList" class="list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <label>API URL: <input type="text" id="apiBaseUrl" value="http://localhost:8082"></label>
+    <button type="button" id="refreshBtn">Refresh</button>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
