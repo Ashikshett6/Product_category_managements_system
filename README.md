@@ -62,14 +62,16 @@ npx serve .
 | PUT | `/product/{productId}` | Update product |
 | DELETE | `/category/{categoryId}/product/{productId}` | Delete product |
 
-## GitHub Pages (Frontend)
+## Deploy (GitHub Pages – Frontend)
 
-1. Push this repo to GitHub.
-2. Go to **Settings → Pages**.
-3. Source: **Deploy from branch** → `main` → folder **`/frontend`**.
-4. Save. Your UI will be at: `https://<username>.github.io/Product_category_managements_system/`
+1. Repo: https://github.com/Ashikshett6/Product_category_managements_system
+2. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**
+3. Push to `main` — workflow deploys `frontend/` automatically
+4. Live URL: **https://ashikshett6.github.io/Product_category_managements_system/**
 
-> **Note:** GitHub Pages serves only the static frontend. The Spring Boot API must run elsewhere (local machine, cloud, etc.) and you must set the API URL in the frontend footer.
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** for full steps (backend on Render/local).
+
+> GitHub Pages hosts only the UI. Run the Spring Boot API locally or on Render, then set the API URL in the page footer.
 
 ## Project Structure
 
