@@ -65,11 +65,10 @@ npx serve .
 ## Deploy (GitHub Pages – Frontend)
 
 1. Repo: https://github.com/Ashikshett6/Product_category_managements_system
-2. Push to `main` → Actions deploys `frontend/` to **`gh-pages`** branch
-3. **Settings → Pages → Source:** **Deploy from branch** → Branch **`gh-pages`** → Folder **`/ (root)`**
-4. Live URL: **https://ashikshett6.github.io/Product_category_managements_system/**
+2. **Settings → Pages → Source:** **Deploy from branch** → **`main`** → folder **`/docs`**
+3. Wait 5 minutes, then open: **https://ashikshett6.github.io/Product_category_managements_system/**
 
-See **[DEPLOYMENT.md](DEPLOYMENT.md)** if you get 404 or workflow errors.
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** if you see **Page Not Found**.
 
 > GitHub Pages hosts only the UI. Run the Spring Boot API locally, then set API URL in the page footer.
 
