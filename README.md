@@ -65,13 +65,13 @@ npx serve .
 ## Deploy (GitHub Pages – Frontend)
 
 1. Repo: https://github.com/Ashikshett6/Product_category_managements_system
-2. **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**
-3. Push to `main` — workflow deploys `frontend/` automatically
+2. Push to `main` → Actions deploys `frontend/` to **`gh-pages`** branch
+3. **Settings → Pages → Source:** **Deploy from branch** → Branch **`gh-pages`** → Folder **`/ (root)`**
 4. Live URL: **https://ashikshett6.github.io/Product_category_managements_system/**
 
-See **[DEPLOYMENT.md](DEPLOYMENT.md)** for full steps (backend on Render/local).
+See **[DEPLOYMENT.md](DEPLOYMENT.md)** if you get 404 or workflow errors.
 
-> GitHub Pages hosts only the UI. Run the Spring Boot API locally or on Render, then set the API URL in the page footer.
+> GitHub Pages hosts only the UI. Run the Spring Boot API locally, then set API URL in the page footer.
 
 ## Project Structure
 

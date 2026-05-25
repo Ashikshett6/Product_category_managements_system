@@ -1,87 +1,81 @@
-# Deployment Guide
+# Deployment Guide – Fix GitHub Pages Errors
 
-## 1. Frontend (GitHub Pages) – Automatic
-
-The repo includes a GitHub Actions workflow that deploys the `frontend` folder on every push to `main`.
-
-### One-time setup on GitHub
+## Step 1: Enable GitHub Pages (IMPORTANT)
 
 1. Open: https://github.com/Ashikshett6/Product_category_managements_system/settings/pages
-2. Under **Build and deployment** → **Source**, select **GitHub Actions** (not “Deploy from branch”).
-3. Save.
 
-### After push to `main`
+2. Under **Build and deployment** → **Source**, select:
+   - **Deploy from a branch**
 
-- Go to **Actions** tab → wait for **Deploy Frontend to GitHub Pages** to finish (green).
-- Your site URL:
-  **https://ashikshett6.github.io/Product_category_managements_system/**
+3. Set:
+   - **Branch:** `gh-pages`
+   - **Folder:** `/ (root)`
+
+4. Click **Save**
+
+5. Wait 2–5 minutes for the site to build.
 
 ---
 
-## 2. Backend (Spring Boot API)
+## Step 2: Trigger deployment
 
-GitHub Pages hosts only static files. The API must run on a server.
+Every push to `main` runs the workflow and updates the `gh-pages` branch.
 
-### Option A – Run on your PC (development)
+- Check: https://github.com/Ashikshett6/Product_category_managements_system/actions
+- Workflow name: **Deploy Frontend to GitHub Pages**
+- Status must be **green** (success)
+
+If it failed, click the run → read the error → push again after fixes.
+
+---
+
+## Step 3: Open your live site
+
+**URL:** https://ashikshett6.github.io/Product_category_managements_system/
+
+If you see 404:
+- Confirm `gh-pages` branch exists (Code → branch dropdown → `gh-pages`)
+- Confirm Pages source is **gh-pages** branch, **/ (root)**
+- Wait a few minutes and refresh
+
+---
+
+## Step 4: Run backend (for API data)
+
+GitHub Pages only hosts the UI. Start the API on your PC:
 
 ```bash
-# Create MySQL database
-CREATE DATABASE pcmsr;
-
-# Start API (port 8082)
 .\mvnw spring-boot:run
 ```
 
-Open frontend and set API URL in footer: `http://localhost:8082`
+MySQL database `pcmsr` must exist.
 
-### Option B – Deploy API to Render (free tier)
-
-1. Sign up at https://render.com
-2. **New → Web Service** → connect your GitHub repo
-3. Settings:
-   - **Root Directory:** leave empty (project root)
-   - **Build Command:** `./mvnw clean package -DskipTests`
-   - **Start Command:** `java -jar target/ProductCategoryMangementSystem-0.0.1-SNAPSHOT.jar`
-4. Add **MySQL** database on Render (or use external MySQL) and set environment variables:
-
-| Variable | Example |
-|----------|---------|
-| `SPRING_DATASOURCE_URL` | `jdbc:mysql://host:3306/pcmsr` |
-| `SPRING_DATASOURCE_USERNAME` | your user |
-| `SPRING_DATASOURCE_PASSWORD` | your password |
-| `SERVER_PORT` | `8082` or Render’s `$PORT` |
-
-5. After deploy, copy your Render URL (e.g. `https://pcms-api.onrender.com`).
-6. Open GitHub Pages site → set **API URL** in footer to that URL.
+On the website footer, set **API URL:** `http://localhost:8082`
 
 ---
 
-## 3. Full stack locally
+## Common errors and fixes
 
-| Step | Command / URL |
-|------|----------------|
-| MySQL | Database `pcmsr` created |
-| Backend | `.\mvnw spring-boot:run` |
-| API | http://localhost:8082/category |
-| Frontend | Open `frontend/index.html` or `npx serve frontend` |
-
----
-
-## 4. Verify deployment
-
-| Check | Expected |
-|-------|----------|
-| GitHub Pages | Site loads with title “Product Category Management System” |
-| API running | `GET http://localhost:8082/category` returns `[]` or JSON list |
-| Frontend + API | Add category from UI → success message |
+| Error | Fix |
+|-------|-----|
+| **404 on GitHub Pages** | Settings → Pages → Branch `gh-pages`, folder `/` |
+| **Actions workflow failed** | Open Actions tab → read log → fix and push again |
+| **CORS / Failed to fetch** | Start backend; set correct API URL in footer |
+| **gh-pages branch missing** | Re-run workflow (Actions → Run workflow) |
+| **Site shows old version** | Hard refresh (Ctrl+F5) or wait 5 minutes |
 
 ---
 
-## 5. Troubleshooting
+## Manual deploy (if Actions still fails)
 
-| Problem | Fix |
-|---------|-----|
-| CORS error in browser | Ensure backend is running and `CorsConfig.java` is deployed |
-| 404 on GitHub Pages | Enable **GitHub Actions** as Pages source in repo Settings |
-| API connection failed | Check API URL in footer matches running backend |
-| MySQL connection failed | Check `application.yaml` credentials and database name `pcmsr` |
+```bash
+git checkout --orphan gh-pages
+git rm -rf .
+cp -r frontend/* .
+git add .
+git commit -m "Deploy frontend"
+git push origin gh-pages --force
+git checkout main
+```
+
+Then set Pages source to branch `gh-pages` as in Step 1.
